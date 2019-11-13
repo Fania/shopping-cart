@@ -10,3 +10,10 @@ nav i {
   /* color: #900C3F; */
 }
 
+#products li {
+  padding: 1em;
+}
+#products li i {
+  color: #34495E;
+  padding-left: 1em;
+}
