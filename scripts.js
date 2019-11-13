@@ -1,64 +1,77 @@
 "use strict";
 
-const [...productListItems] = document.querySelectorAll("#products ul li");
-const productNames = productListItems.map(p => p.innerText);
-const addItemButtons = document.querySelectorAll(".fa-plus-circle");
-const cartButton = document.querySelector(".fa-shopping-cart");
-const cartSection = document.querySelector("#cartSection");
-const cart = document.querySelector("#cart");
-const badge = document.querySelector("#badge");
 
-let shoppingCart = [];
+document.addEventListener('readystatechange', () => {
+    
+  console.log("do other stuff");
+
+  const [...productListItems] = document.querySelectorAll("#products ul li");
+  const productNames = productListItems.map(p => p.innerText);
+  const addItemButtons = document.querySelectorAll(".fa-plus-circle");
+  console.log(addItemButtons);
+  const cartButton = document.querySelector(".fa-shopping-cart");
+  const cartSection = document.querySelector("#cartSection");
+  const cart = document.querySelector("#cart");
+  const badge = document.querySelector("#badge");
+
+  let shoppingCart = [];
 
 
-// GET CART FROM LOCALSTORAGE IF IT EXISTS
-window.onload = () => {
-  const currentStore = localStorage.getItem("shoppingCart");
-  if(currentStore !== null && currentStore !== "") {
-    shoppingCart = currentStore.split(",");
-    updateCart();
-  }
-};
+  // GET CART FROM LOCALSTORAGE IF IT EXISTS
+  window.onload = () => {
+    const currentStore = localStorage.getItem("shoppingCart");
+    if(currentStore !== null && currentStore !== "") {
+      shoppingCart = currentStore.split(",");
+      updateCart();
+    }
+  };
 
-// ADD ITEM TO CART
-addItemButtons.forEach(a => {
-  a.addEventListener("click", () => {
-    // console.log(a.parentElement);
-    shoppingCart.push(a.previousSibling.textContent);
-    updateCart();
-  });
-});
-
-// REMOVE ITEM FROM CART
-function updateDeleteButtons() {
-  const delItemButtons = document.querySelectorAll(".fa-minus-circle");
-  delItemButtons.forEach(d => {
-    d.addEventListener("click", () => {
-      const idx = shoppingCart.indexOf(d.previousSibling.textContent);
-      shoppingCart.splice(idx, 1);
+  // ADD ITEM TO CART
+  addItemButtons.forEach(a => {
+    a.addEventListener("click", () => {
+      console.log(a.parentElement);
+      shoppingCart.push(a.previousSibling.textContent);
       updateCart();
     });
   });
-}
 
-// SHOW SHOPPING CART
-let cartToggle = false;
-cartButton.addEventListener("click", () => {
-  cartToggle = !cartToggle;
-  if (cartToggle) { 
-    cartSection.classList.remove("hide"); 
-  } else {
-    cartSection.classList.add("hide");
+  // REMOVE ITEM FROM CART
+  function updateDeleteButtons() {
+    const delItemButtons = document.querySelectorAll(".fa-minus-circle");
+    delItemButtons.forEach(d => {
+      d.addEventListener("click", () => {
+        const idx = shoppingCart.indexOf(d.previousSibling.textContent);
+        shoppingCart.splice(idx, 1);
+        updateCart();
+      });
+    });
   }
-});
 
-// UPDATE SHOPPING CARD
-function updateCart() {
-  cart.innerHTML = "";
-  shoppingCart.forEach(s => {
-    cart.innerHTML += `<li>${s}<i class="fas fa-minus-circle"></i></li>`;
+  // SHOW SHOPPING CART
+  let cartToggle = false;
+  cartButton.addEventListener("click", () => {
+    cartToggle = !cartToggle;
+    if (cartToggle) { 
+      cartSection.classList.remove("hide"); 
+    } else {
+      cartSection.classList.add("hide");
+    }
   });
-  badge.innerText = shoppingCart.length;
-  updateDeleteButtons();
-  localStorage.setItem("shoppingCart", shoppingCart);
-}
+
+  // UPDATE SHOPPING CARD
+  function updateCart() {
+    cart.innerHTML = "";
+    shoppingCart.forEach(s => {
+      // cart.innerHTML += `<li>${s}<i class="fas fa-minus-circle"></i></li>`;
+      cart.innerHTML += `
+        <li>
+          <img src="${s['img']}"> <strong>${s["name"]}</strong>: £${s["price"]}<i class="fas fa-minus-circle"></i>
+        </li>
+        `;
+    });
+    badge.innerText = shoppingCart.length;
+    updateDeleteButtons();
+    localStorage.setItem("shoppingCart", shoppingCart);
+  }
+
+});

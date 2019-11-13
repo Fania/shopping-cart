@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Cat Toy",
+    "img": "cat.jpg",
+    "price": 4.99,
+    "desc": "A fun toy to roll around."
+  },
+  {
+    "name": "Cat Tree",
+    "img": "http://placekitten.com/300/200",
+    "price": 89.99,
+    "desc": "A massive cat tree with caves and everything."
+  },
+  {
+    "name": "Cat Snacks",
+    "img": "http://placekitten.com/400/300",
+    "price": 7.95,
+    "desc": "A bag of cat treats."
+  },
+  {
+    "name": "Kitten Snuggles",
+    "img": "http://placekitten.com/600/400",
+    "price": 999.99,
+    "desc": "Exclusive rights to snuggle any kitten."
+  },
+  {
+    "name": "Kitten Milk",
+    "img": "http://placekitten.com/500/400",
+    "price": 2.99,
+    "desc": "A carton of generic milk for kittens."
+  }
+]
