@@ -1,0 +1,12 @@
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+nav i {
+  padding: 1em;
+  color: #34495E;
+  /* color: #900C3F; */
+}
+
