@@ -1,77 +1,114 @@
 "use strict";
 
+// POPULATE PRODUCTS FROM JSON
+// NEEDS TO BE RUN ON SERVER
+fetch("products.json")
+  .then(res => res.json())
+  .then(data => {
+    displayProducts(data);
+  })
+  .catch(err => console.error(err));
 
-document.addEventListener('readystatechange', () => {
-    
-  console.log("do other stuff");
+var database;
 
-  const [...productListItems] = document.querySelectorAll("#products ul li");
-  const productNames = productListItems.map(p => p.innerText);
+// populate product list from external json
+function displayProducts(data) {
+  data.forEach(d => {
+    const productList = document.querySelector("#products ul");
+    const item = `
+    <li>
+      <p><strong>${d["name"]}</strong></p>
+      <p>£${d["price"]}<i id="add-${d["name"]}" class="fas fa-plus-circle"></i></p>
+      <figure>
+        <img src="${d['img']}">
+        <figcaption>${d["desc"]}</figcaption>
+      </figure>
+    </li>
+    `;
+    productList.insertAdjacentHTML('beforeend', item);
+  });
+  // when finished enable cart functionality
+  database = data;
+  addButtons();
+}
+
+// ENABLE ADD BUTTONS
+function addButtons() {
   const addItemButtons = document.querySelectorAll(".fa-plus-circle");
-  console.log(addItemButtons);
-  const cartButton = document.querySelector(".fa-shopping-cart");
-  const cartSection = document.querySelector("#cartSection");
-  const cart = document.querySelector("#cart");
-  const badge = document.querySelector("#badge");
-
-  let shoppingCart = [];
-
-
-  // GET CART FROM LOCALSTORAGE IF IT EXISTS
-  window.onload = () => {
-    const currentStore = localStorage.getItem("shoppingCart");
-    if(currentStore !== null && currentStore !== "") {
-      shoppingCart = currentStore.split(",");
-      updateCart();
-    }
-  };
-
-  // ADD ITEM TO CART
   addItemButtons.forEach(a => {
     a.addEventListener("click", () => {
-      console.log(a.parentElement);
-      shoppingCart.push(a.previousSibling.textContent);
+      let curr = database.find((d) => {
+        return a.id.includes(d.name);
+      });
+      shoppingCart.push(curr);
       updateCart();
     });
   });
+}
 
-  // REMOVE ITEM FROM CART
-  function updateDeleteButtons() {
-    const delItemButtons = document.querySelectorAll(".fa-minus-circle");
-    delItemButtons.forEach(d => {
-      d.addEventListener("click", () => {
-        const idx = shoppingCart.indexOf(d.previousSibling.textContent);
-        shoppingCart.splice(idx, 1);
-        updateCart();
-      });
-    });
+// GET CART FROM LOCALSTORAGE IF IT EXISTS
+window.onload = () => {
+  const currentStore = localStorage.getItem("shoppingCart");
+  const store = JSON.parse(currentStore);
+  if(store !== null && store !== "") {
+    shoppingCart = store;
+    updateCart();
   }
+};
 
-  // SHOW SHOPPING CART
-  let cartToggle = false;
-  cartButton.addEventListener("click", () => {
-    cartToggle = !cartToggle;
-    if (cartToggle) { 
-      cartSection.classList.remove("hide"); 
-    } else {
-      cartSection.classList.add("hide");
-    }
-  });
-
-  // UPDATE SHOPPING CARD
-  function updateCart() {
-    cart.innerHTML = "";
-    shoppingCart.forEach(s => {
-      // cart.innerHTML += `<li>${s}<i class="fas fa-minus-circle"></i></li>`;
-      cart.innerHTML += `
-        <li>
-          <img src="${s['img']}"> <strong>${s["name"]}</strong>: £${s["price"]}<i class="fas fa-minus-circle"></i>
-        </li>
-        `;
-    });
-    badge.innerText = shoppingCart.length;
-    updateDeleteButtons();
-    localStorage.setItem("shoppingCart", shoppingCart);
+// SHOW SHOPPING CART
+let cartToggle = false;
+const cartButton = document.querySelector(".fa-shopping-cart");
+const cartSection = document.querySelector("#cartSection");
+cartButton.addEventListener("click", () => {
+  cartToggle = !cartToggle;
+  if (cartToggle) { 
+    cartSection.classList.remove("hide"); 
+  } else {
+    cartSection.classList.add("hide");
   }
-
 });
+
+// UPDATE SHOPPING CARD
+let shoppingCart = [];
+function updateCart() {
+  const cart = document.querySelector("#cart");
+  const badge = document.querySelector("#badge");
+  cart.innerHTML = "";
+  shoppingCart.forEach(s => {
+    cart.innerHTML += `
+      <li>
+        <img src="${s['img']}"> <strong>${s["name"]}</strong>: £${s["price"]}<i id="del-${s["name"]}" class="fas fa-minus-circle"></i>
+      </li>
+      `;
+  });
+  badge.innerText = shoppingCart.length;
+  updateDeleteButtons();
+  if (shoppingCart != []) {
+  localStorage.setItem("shoppingCart", JSON.stringify(shoppingCart));
+  } else {
+    localStorage.removeItem("shoppingCart");
+  }
+
+  // total price of cart
+  const total = shoppingCart
+    .map(s => parseFloat(s.price))
+    .reduce((a,c) => a + c);
+  const totalPlaceholder = document.querySelector("#total");
+  totalPlaceholder.innerHTML = total.toFixed(2);
+}
+
+// REMOVE ITEM FROM CART
+function updateDeleteButtons() {
+  const delItemButtons = document.querySelectorAll(".fa-minus-circle");
+  delItemButtons.forEach(d => {
+    d.addEventListener("click", () => {
+      let curr = database.find((i) => {
+        return d.id.includes(i.name);
+      });
+      const idx = shoppingCart.indexOf(curr);
+      shoppingCart.splice(idx, 1);
+      updateCart();
+    });
+  });
+}

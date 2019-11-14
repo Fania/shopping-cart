@@ -16,15 +16,15 @@ nav {
 }
 #badge {
   font-size: 20px;
-  background: magenta;
+  background: cyan;
   border-radius: 50%;
   padding: 6px;
   height: .7em;
   line-height: .7em;
   text-align: center;
-  position: absolute;
-  right: 0;
-  top: 80px;
+  position: fixed;
+  right: 10px;
+  top: 30px;
 }
 .fa-plus-circle {
   color: #008060;
@@ -43,13 +43,24 @@ i:hover {
 /* popup */
 #cartSection {
   position: fixed;
-  width: 90vw;
+  width: calc(100% - 16px);
   min-height: 20vh;
-  top: 15vh;
-  left: 2vw;
+  top: 120px;
+  left: 8px;
   box-shadow: 0 5px 10px #ccc;
   background: #eee;
   padding: 1em;
+  box-sizing: border-box;
+}
+#cartSection img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+#cart {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 #cart li {
   padding: 1em 1em 1em 0;
@@ -76,9 +87,7 @@ li {
   margin: 0 0 .5em 0;
 }
 #products img {
-  width: 300px;
-}
-#cartSection img {
-  width: 50px;
-  border-radius: 50%;
+  width: 100%;
+  object-fit: cover;
+  height: 200px;
 }
