@@ -37,9 +37,7 @@ function addButtons() {
   const addItemButtons = document.querySelectorAll(".fa-plus-circle");
   addItemButtons.forEach(a => {
     a.addEventListener("click", () => {
-      let curr = database.find((d) => {
-        return a.id.includes(d.name);
-      });
+      let curr = database.find(d => a.id.includes(d.name));
       shoppingCart.push(curr);
       updateCart();
     });
@@ -75,12 +73,14 @@ function updateCart() {
   const cart = document.querySelector("#cart");
   const badge = document.querySelector("#badge");
   cart.innerHTML = "";
+  let cnt = 0;
   shoppingCart.forEach(s => {
     cart.innerHTML += `
       <li>
-        <img src="${s['img']}"> <strong>${s["name"]}</strong>: £${s["price"]}<i id="del-${s["name"]}" class="fas fa-minus-circle"></i>
+        <img src="${s['img']}"> <strong>${s["name"]}</strong>: £${s["price"]}<i id="del-${s["name"]}-${cnt}" class="fas fa-minus-circle"></i>
       </li>
       `;
+    cnt++;
   });
   badge.innerText = shoppingCart.length;
   updateDeleteButtons();
@@ -89,13 +89,16 @@ function updateCart() {
   } else {
     localStorage.removeItem("shoppingCart");
   }
-
   // total price of cart
-  const total = shoppingCart
-    .map(s => parseFloat(s.price))
-    .reduce((a,c) => a + c);
   const totalPlaceholder = document.querySelector("#total");
-  totalPlaceholder.innerHTML = total.toFixed(2);
+  if(shoppingCart.length > 0) {
+    const total = shoppingCart
+      .map(s => parseFloat(s.price))
+      .reduce((a,c) => a + c);
+    totalPlaceholder.innerHTML = total.toFixed(2);
+  } else {
+    totalPlaceholder.innerHTML = "0.00";
+  }
 }
 
 // REMOVE ITEM FROM CART
@@ -103,10 +106,7 @@ function updateDeleteButtons() {
   const delItemButtons = document.querySelectorAll(".fa-minus-circle");
   delItemButtons.forEach(d => {
     d.addEventListener("click", () => {
-      let curr = database.find((i) => {
-        return d.id.includes(i.name);
-      });
-      const idx = shoppingCart.indexOf(curr);
+      const idx = d.id[d.id.length -1];
       shoppingCart.splice(idx, 1);
       updateCart();
     });

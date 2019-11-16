@@ -15,15 +15,15 @@ nav {
   font-size: 2em;
 }
 #badge {
-  font-size: 20px;
+  font-size: 15px;
   background: cyan;
   border-radius: 50%;
-  padding: 6px;
-  height: .7em;
-  line-height: .7em;
+  padding: 2px;
+  height: 16px;
+  width: 16px;
   text-align: center;
   position: fixed;
-  right: 10px;
+  right: 20px;
   top: 30px;
 }
 .fa-plus-circle {
@@ -55,8 +55,9 @@ i:hover {
 #cartSection img {
   width: 50px;
   height: 50px;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 50%;
+  margin-right: 10px;
 }
 #cart {
   border-top: 1px solid #ccc;
@@ -64,6 +65,8 @@ i:hover {
 }
 #cart li {
   padding: 1em 1em 1em 0;
+  display: flex;
+  align-items: center;
 }
 .hide {
   display: none;
@@ -90,4 +93,17 @@ li {
   width: 100%;
   object-fit: cover;
   height: 200px;
+}
+
+@media screen and (min-width: 600px) {
+
+  #products ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  #products li {
+    width: 40%;
+  }
+
 }
