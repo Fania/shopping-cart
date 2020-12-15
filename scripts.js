@@ -1,7 +1,8 @@
 "use strict";
 
-// POPULATE PRODUCTS FROM JSON
-// NEEDS TO BE RUN ON SERVER
+// populate products from json
+// needs to be run on server
+
 fetch("products.json")
   .then(res => res.json())
   .then(data => {
@@ -12,6 +13,7 @@ fetch("products.json")
 var database;
 
 // populate product list from external json
+
 function displayProducts(data) {
   data.forEach(d => {
     const productList = document.querySelector("#products ul");
@@ -32,7 +34,8 @@ function displayProducts(data) {
   addButtons();
 }
 
-// ENABLE ADD BUTTONS
+// Enable add buttons
+
 function addButtons() {
   const addItemButtons = document.querySelectorAll(".fa-plus-circle");
   addItemButtons.forEach(a => {
@@ -44,7 +47,8 @@ function addButtons() {
   });
 }
 
-// GET CART FROM LOCALSTORAGE IF IT EXISTS
+// Get cart from localstorage if it exists
+
 window.onload = () => {
   const currentStore = localStorage.getItem("shoppingCart");
   const store = JSON.parse(currentStore);
