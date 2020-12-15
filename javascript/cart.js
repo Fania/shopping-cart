@@ -1,9 +1,8 @@
 "use strict";
 
-// populate products from json
-// needs to be run on server
+// Populate products from json - needs to be run on a server
 
-fetch("products.json")
+fetch("javascript/products.json")
   .then(res => res.json())
   .then(data => {
     displayProducts(data);
@@ -12,7 +11,7 @@ fetch("products.json")
 
 var database;
 
-// populate product list from external json
+// Populate product list from external json
 
 function displayProducts(data) {
   data.forEach(d => {
@@ -29,7 +28,8 @@ function displayProducts(data) {
     `;
     productList.insertAdjacentHTML('beforeend', item);
   });
-  // when finished enable cart functionality
+  
+  // When finished, enable cart functionality
   database = data;
   addButtons();
 }
@@ -58,7 +58,7 @@ window.onload = () => {
   }
 };
 
-// SHOW SHOPPING CART
+// SHOW shopping cart
 let cartToggle = false;
 const cartButton = document.querySelector(".fa-shopping-cart");
 const cartSection = document.querySelector("#cartSection");
@@ -71,7 +71,7 @@ cartButton.addEventListener("click", () => {
   }
 });
 
-// UPDATE SHOPPING CARD
+// UPDATE shopping card
 let shoppingCart = [];
 function updateCart() {
   const cart = document.querySelector("#cart");
@@ -105,7 +105,7 @@ function updateCart() {
   }
 }
 
-// REMOVE ITEM FROM CART
+// REMOVE item from cart
 function updateDeleteButtons() {
   const delItemButtons = document.querySelectorAll(".fa-minus-circle");
   delItemButtons.forEach(d => {

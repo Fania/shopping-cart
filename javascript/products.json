@@ -7,31 +7,31 @@
   },
   {
     "name": "Cat Tree",
-    "img": "http://placekitten.com/300/200",
+    "img": "https://placekitten.com/300/200",
     "price": 89.99,
     "desc": "A massive cat tree with caves and everything."
   },
   {
     "name": "Cat Snacks",
-    "img": "http://placekitten.com/400/300",
+    "img": "https://placekitten.com/500/300",
     "price": 7.95,
     "desc": "A bag of cat treats."
   },
   {
     "name": "Kitten Snuggles",
-    "img": "http://placekitten.com/600/400",
+    "img": "https://placekitten.com/500/200",
     "price": 999.99,
     "desc": "Exclusive rights to snuggle any kitten."
   },
   {
     "name": "Kitten Milk",
-    "img": "http://placekitten.com/500/400",
+    "img": "https://placekitten.com/600/400",
     "price": 2.99,
     "desc": "A carton of generic milk for kittens."
   },
   {
     "name": "A Furry Kitten",
-    "img": "http://placekitten.com/600/500",
+    "img": "https://placekitten.com/600/500",
     "price": 101.00,
     "desc": "A kitten toy for your kitten to play with."
   }
