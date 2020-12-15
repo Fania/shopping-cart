@@ -28,5 +28,11 @@
     "img": "http://placekitten.com/500/400",
     "price": 2.99,
     "desc": "A carton of generic milk for kittens."
+  },
+  {
+    "name": "A Furry Kitten",
+    "img": "http://placekitten.com/600/500",
+    "price": 101.00,
+    "desc": "A kitten toy for your kitten to play with."
   }
 ]
